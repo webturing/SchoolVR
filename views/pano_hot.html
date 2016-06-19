@@ -1,0 +1,164 @@
+{% extends "pano_layout.html" %}
+
+{% block wrapper %}
+<div id="main" style="height:600px;width: auto;margin-left: 21em;top: 20px;right: 0;"></div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+var myChart = echarts.init(document.getElementById('main'));
+{{ json1 }}
+var schema = [{
+	name: 'date',
+	index: 0,
+	text: '日'
+}, {
+	name: 'hot',
+	index: 1,
+	text: '热度'
+}, {
+	name: 'picCount',
+	index: 2,
+	text: '分享图片数'
+}, {
+	name: 'clickCount',
+	index: 3,
+	text: '点赞次数'
+}];
+
+var itemStyle = {
+	normal: {
+		opacity: 0.8,
+		shadowBlur: 10,
+		shadowOffsetX: 0,
+		shadowOffsetY: 0,
+		shadowColor: 'rgba(0, 0, 0, 0.5)'
+	}
+};
+
+option = {
+	backgroundColor: '#333',
+	color: [
+		'#dd4444', '#fec42c', '#80F1BE'
+	],
+	
+	grid: {
+		x: '10%',
+		x2: 150,
+		y: '18%',
+		y2: '10%'
+	},
+	tooltip: {
+		padding: 10,
+		backgroundColor: '#222',
+		borderColor: '#777',
+		borderWidth: 1,
+		formatter: function(obj) {
+			var value = obj.value;
+			return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' + '全景 ∀' + value[0] + '</div>' + schema[1].text + '：' + value[1] + '<br>' + schema[2].text + '：' + value[2] + '<br>' + schema[3].text + '：' + value[3] + '<br>';
+		}
+	},
+	xAxis: {
+		type: 'value',
+		name: '全景',
+		nameGap: 16,
+		nameTextStyle: {
+			color: '#fff',
+			fontSize: 14
+		},
+		max: 120,
+		splitLine: {
+			show: false
+		},
+		axisLine: {
+			lineStyle: {
+				color: '#777'
+			}
+		},
+		axisTick: {
+			lineStyle: {
+				color: '#777'
+			}
+		},
+		axisLabel: {
+			formatter: '{value}',
+			textStyle: {
+				color: '#fff'
+			}
+		}
+	},
+	yAxis: {
+		type: 'value',
+		name: '节点热度',
+		nameLocation: 'end',
+		nameGap: 20,
+		nameTextStyle: {
+			color: '#fff',
+			fontSize: 16
+		},
+		axisLine: {
+			lineStyle: {
+				color: '#777'
+			}
+		},
+		axisTick: {
+			lineStyle: {
+				color: '#777'
+			}
+		},
+		splitLine: {
+			show: false
+		},
+		axisLabel: {
+			textStyle: {
+				color: '#fff'
+			}
+		}
+	},
+	visualMap: [{
+		left: 'right',
+		top: '10%',
+		dimension: 2,
+		min: 0,
+		max: {{ max }},
+		itemWidth: 30,
+		itemHeight: 120,
+		calculable: true,
+		precision: 0.1,
+		text: ['分享图片数'],
+		textGap: 30,
+		textStyle: {
+			color: '#fff'
+		},
+		inRange: {
+			symbolSize: [10, 70]
+		},
+		outOfRange: {
+			symbolSize: [10, 70],
+			color: ['rgba(255,255,255,.2)']
+		},
+		controller: {
+			inRange: {
+				color: ['#c23531']
+			},
+			outOfRange: {
+				color: ['#444']
+			}
+		}
+	}],
+	series: [
+	{% for d in json2 %}
+		{name: "node{{ d.name }}",type: 'scatter',itemStyle: itemStyle,data: data{{ d.name }}},
+	{% endfor %}
+	]
+};
+myChart.on('click', function (params) {
+    var city = params;
+    console.log(city.seriesName);
+    window.open("/pano?curid="+city.seriesName.replace("node",""));
+});
+myChart.setOption(option);
+
+$("#main div").css("overflow","initial");
+</script>
+{% endblock %}

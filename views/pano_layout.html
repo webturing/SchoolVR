@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block header %}
+	<link rel="stylesheet" href="/static/css/info.css" />
+	<script type="text/javascript" src="/static/js/jquery.masonry.js"></script>
+{% endblock %}
+
+{% block rightshare %}
+<li class="dropdown-toggle" id="sharepano" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	<a onclick="getserver()">实景服务
+		<i class="icon-envelope"></i>
+		<span class="badge">Hot</span>
+	</a>
+</li>
+<ul class="dropdown-menu extended inbox" id="serverBox" aria-labelledby="sharepano">
+	<li>
+		<p>实景服务</p>
+	</li>
+</ul>
+
+{% endblock %}
+
+{% block leftshare %}
+{% endblock %}
+
+{% block left %}
+<div class="sidebar-menu">
+    <a href="#userMeun" class="nav-header menu-first" aria-expanded="true" data-toggle="collapse"><i class="icon-user-md icon-large"></i>美景分享</a>
+    <ul id="userMeun" class="nav nav-list collapse menu-second in" aria-expanded="true">
+        <li><a href="/pano/getallshare">所有分享</a></li>
+        <li><a href="/pano/get_cur_share">当前分享</a></li>
+         <li><a href="/pano/hotspot">实景热点图</a></li>
+
+ 
+    </ul>
+</div>
+{% endblock %}

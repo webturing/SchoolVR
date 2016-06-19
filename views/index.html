@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<style type="text/css">
+    html,body{margin:0;padding:0;}
+    .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+    .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+      @media screen and (max-width: 1925px) {
+    	#map{left: 307px;top: -123px;position: absolute;cursor: default;}
+    }
+    /*@media  screen and (max-width: 1685px) {
+    	#map{left: 187px;top: -138px;position: absolute;cursor: default;}
+    }*/
+    @media  screen and (max-width: 1605px) {
+    	#map{left: 148px;top: -213px;position: absolute;cursor: default;}
+    }
+    @media  screen and (max-width: 1445px) {
+    	#map{left: 68px;top: -212px;position: absolute;cursor: default;}
+    }
+    
+     @media  screen and (max-width: 1371px) {
+    	#map{left: 30px;top: -279px;position: absolute;cursor: default;}
+    }
+    @media  screen and (max-width: 1285px) {
+    	#map{left: -13px;top: -181px;position: absolute;cursor: default;}
+    }
+    @media  screen and (max-width: 1029px) {
+    	#map{left: -140px;top: -278px;position: absolute;cursor: default;}
+    }
+    
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+<script src="/static/js/prefixfree.min.js"></script>
+{% endblock %}
+
+{% block wrapperupp %}
+{% if globals.getcookie('username') %}
+{% else %}
+<div class='tip-container' style="z-index: 10;opacity: 0.9">
+	<h1>全景VR引导</h1>
+	<span class='pano-close'></span>
+	<div class='slider-tip-container'>
+	  <div class='slider-turn'>
+	    <p>1. 请使用<b><a href="http://7xt7vt.com1.z0.glb.clouddn.com/chrome.exe">chrome(谷歌浏览器) </a></b>访问，获得更佳的体验~</p>
+	    <p>
+	      2. 推荐使用屏幕分辨率 1366*768， 1600*900， 1920*1080等
+	    </p>
+	    <p>3. 登入你的账户，获得更多功能，随时随地关注收藏你喜欢的全景~</p>
+	    <p>
+	      <a>@安徽科技学院</a>
+	      <br>
+	      <a title='vr'>@vr.jtahstu.com</a>
+	    </p>
+	    <p>Thank you !</p>
+	  </div>
+	</div>
+	<div class='bottom'>
+	  <div class='step'>
+	    <span></span>
+	    <ul>
+	      <li data-num='1'></li>
+	      <li data-num='2'></li>
+	      <li data-num='3'></li>
+	      <li data-num='4'></li>
+	      <li data-num='5'></li>
+	    </ul>
+	  </div>
+	  <button class='btn tip-next-btn'>Next</button>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block wrapper %}
+<!-- {{ globals.getcookie('uid') }} -->
+			<div class="container">
+				<div id="dituContent"style="height: 100%;position: absolute;top:0;left:0;right:0;"></div>
+				<div id="map" class="container">
+				</div>
+			</div>
+{% endblock %}
+
+
+{% block lastfooter %}
+<script type="text/javascript" src="/static/js/index.js"></script>
+<script type="text/javascript" src="/static/js/baidu.js"></script>
+{% endblock %}

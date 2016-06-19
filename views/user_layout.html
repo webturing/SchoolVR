@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block header %}
+	<link rel="stylesheet" href="/static/css/info.css" />
+	<script type="text/javascript" src="/static/js/jquery.masonry.js"></script>
+{% endblock %}
+
+
+{% block left %}
+<div class="sidebar-menu">
+    <a href="#userMeun" class="nav-header menu-first" aria-expanded="true" data-toggle="collapse"><i class="icon-user-md icon-large"></i>我的账户</a>
+    <ul id="userMeun" class="nav nav-list collapse menu-second in" aria-expanded="true">
+        <li><a href="/user/collect">我的喜欢</a></li>
+        <li><a href="/user/focus">我的关注</a></li>
+        <li><a href="/pano/hotspot">实景热点</a></li>
+    </ul>
+</div>
+{% endblock %}

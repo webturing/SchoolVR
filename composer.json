@@ -1,0 +1,15 @@
+{
+    "require": {
+        "twig/twig": "1.16.0",
+        "mikecao/flight": "1.2",
+        "kilte/pagination": "1.1.*@dev",
+        "rdir/simple-html-dom": "v1.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AnkePano\\control\\": "control/",
+            "AnkePano\\model\\": "model/",
+            "AnkePano\\conf\\": "conf/"
+        }
+    }
+}

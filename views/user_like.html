@@ -1,0 +1,67 @@
+{% extends "user_layout.html" %}
+
+{% block wrapper %}
+				<div class="clearfix">
+					<!-- 分页 -->
+				    <div class="pages" style="text-align: center;">
+				      <ul class="pagination">
+				      {% for index, p in pagination %}
+				        {% if p == 'first' %}
+				          <li class="first"><a href="/pano/getallshare/{{ index }}">首页</a></li>
+				        {% endif %}
+
+				        {% if p == 'previous' %}
+				          <li class="prev"><a href="/pano/getallshare/{{ index }}">{{ index }}</a></li>
+				        {% endif %}
+
+				        {% if p == 'current' %}
+				          <li class="active"><a href="#">{{ index }}</a></li>
+				        {% endif %}
+
+				        {% if p == 'next' %}
+				          <li class="next"><a href="/pano/getallshare/{{ index }}">{{ index }}</a></li>
+				        {% endif %}
+
+				        {% if p == 'last' %}
+				          <li class="last"><a href="/pano/getallshare/{{ index }}">末页</a></li>
+				        {% endif %}
+				      {% endfor %}
+				      </ul>
+				    </div>
+				<div class="item_list infinite_scroll" id="waterflow" style=" overflow-y: scroll;">
+				{% for doc in docs %}
+					<div class="item masonry_brick">
+						<div class="item_t">
+							<div class="img">
+								<a href="#" onclick="popover({{ doc.pid }})"><img width="210"  alt="" src="/static/uploads/{{ doc.pname }}" /></a>
+								<span class="share-user">{{ doc.username }}</span>
+								<div class="btns">
+									<a href="/pano?curid={{ doc.panoid }}" class="img_album_btn">进入实景∀{{ doc.panoid }}</a>
+								</div>
+							</div>
+							<div class="title"><span>{{ doc.comment }}</span></div>
+						</div>
+						<div class="item_b clearfix">
+							<div class="items_likes fl">
+								<a href="#" class="like_btn" onclick="like({{ doc.pid }})"></a>
+								<em class="bold">{{ doc.click }}+</em>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			</div>
+{% endblock %}
+
+
+
+{% block lastfooter %}
+<script type="text/javascript">
+$(function(){
+	item_callback(); 
+	$('.item').fadeIn();
+	height = $(window).height();
+	$("#waterflow").height(height-200);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<style type="text/css">
+	ul.nav.pull-right>li{float:left;margin-top: 15px;margin-right: 6px;box-shadow: 1px 2px 1px rgba(0,0,0,.15);background-color: #fff;}
+	#sharepano,.getfocus-li{
+		width:50px;margin-top: 15px;margin-right: 6px;box-shadow: 1px 2px 1px rgba(0,0,0,.15);background-color: #fff;
+	}
+	#shareBox{
+		top:167px;
+		left:70px;
+	}
+	.tip-container-find{
+		top:30em;
+	}
+</style>
+<script type="text/javascript">var currentnode = {{ node }}</script>
+{% endblock %}
+
+{% block leftshare %}
+<li class="dropdown-toggle" id="sharepano" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	<a href="#" class="" onclick="getshare()" >实景分享
+		<i class="icon-envelope"></i>
+		<span class="badge">></span>
+	</a>
+</li>
+<ul class="dropdown-menu extended inbox" id="shareBox" aria-labelledby="sharepano">
+	<li>
+		<p>实景分享~<button class="btn btn-primary btn-sm btn-show-all" style="line-height: 10px;" onclick="jump()">查看全部</button></p>
+	</li>
+	{% for d in data %}
+	  	<li>
+			<a href="#" onclick="popover({{ doc.pid }})">
+			<span class="photo">
+			<img src="{{ da.img }}" alt="" /></span>
+			<span class="subject"> <span class="from">{{ da.user }}</span>
+			<span class="time">{{ time }}</span></span>
+			<span class="message">{{ da.comment }}</span>
+		  </a>
+	  	</li>
+  	{% endfor %}
+</ul>
+<li class="getfocus-li">
+     <a id="getfocus" onclick="focus()">
+     <span class="pano">关注</span>
+     <i class="icon-angle-down"></i>
+     </a>
+</li>
+{% endblock %}
+
+{% block rightshare %}
+{% if globals.getcookie('username') %}
+<li>
+	<a data-toggle="modal" data-target="#sharePhoto">
+		晒照片
+	</a>
+</li>
+{% endif %}
+	<li>
+		<a data-toggle="modal" class="mapButton" data-target="#MapModal" onclick="Maps()">
+			导航视图
+		</a>
+	</li>
+<li class="dropdown-toggle" id="sharepano-server" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	<a onclick="getserver()">实景服务
+		<i class="icon-envelope"></i>
+		<span class="badge">Hot</span>
+	</a>
+</li>
+<ul class="dropdown-menu extended inbox" id="serverBox" aria-labelledby="sharepano-server" style="top:5em;right: 9em;">
+	<li>
+		<p>实景服务</p>
+	</li>
+</ul>
+{% endblock %}
+
+{% block wrapperupp %}
+		<div id="container" style="width:100%;height:100%;position: absolute;">
+		</div>
+{% endblock %}
+
+{% block wrapper %}
+	<script type="text/javascript" src="/static/js/pano2vr_player.js"></script>
+	<!-- Map  -->
+	<div class="modal modalmap fade" id="MapModal" tabindex="-1" role="dialog" aria-labelledby="MapModal" style="opacity: 0.8;width:800px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="width:634px">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="MapModal" style="text-align: center;">
+						当前视图
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div id="map_extend"><span id="map_tips"></span></div>
+					<div id="map" style="height: 405px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--模态框end-->
+{% endblock %}
+{% block footer %}
+<!-- - - - - - - 8<- - - - - - cut here - - - - - 8<- - - - - - - -->
+		<script type="text/javascript">
+		// create the panorama player with the container
+		pano=new pano2vrPlayer("container");
+		window.addEventListener("load", function() {
+			pano.readConfigUrlAsync("/panoxml");
+		});
+		</script>
+		<noscript>
+			<p><b>Please enable Javascript!</b></p>
+		</noscript>
+<!-- - - - - - - 8<- - - - - - cut here - - - - - 8<- - - - - - - --> 
+{% endblock %}
+
+{% block lastfooter %}
+<script type="text/javascript" src="/static/js/pano.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#getfocus").on("click",function(){
+		focus();
+	});
+	// $("#container img").on("click", function(){ console.log("test"); })
+	$(".pull-left").addClass("open");
+	getshare();
+	$(".modalmap").css("left","initial");
+	$("body").delegate(".mapButton","click",function(){
+		document.getElementsByTagName("svg")[0].setAttribute("viewBox","0,0,2400,2000");
+	});
+})
+</script>
+{% endblock %}
